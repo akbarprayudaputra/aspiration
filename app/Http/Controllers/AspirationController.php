@@ -67,9 +67,29 @@ class AspirationController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, Aspiration $aspiration)
+  public function update(Request $request, int $id)
   {
-    //
+    $validated = $request->validate([
+      'title' => 'sometimes|required|string|max:255',
+      'content' => 'sometimes|required|string',
+      'is_anonymous' => 'sometimes|boolean',
+      'category_id' => 'sometimes|required|exists:categories,id',
+      'user_id' => 'sometimes|required|exists:users,id',
+      'status' => 'sometimes|string|max:255',
+    ]);
+
+    $aspiration = Aspiration::find($id);
+
+    if ($aspiration === null) {
+      throw new AspirationException("Aspiration not found.", 404);
+    }
+
+    $aspiration->update($validated);
+
+    return response()->json([
+      'message' => 'Aspiration updated successfully',
+      'aspiration' => $aspiration,
+    ]);
   }
 
   /**
