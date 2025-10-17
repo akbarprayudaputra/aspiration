@@ -16,7 +16,7 @@ class UserController extends Controller
     $users = User::all();
 
     if ($users->isEmpty()) {
-      throw new UsersException("Users not found, or no users in there!?", 404);
+      throw new UsersException("Aspirations is empty.", 404);
     }
 
     return response()->json([
