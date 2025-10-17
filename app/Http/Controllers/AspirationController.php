@@ -50,9 +50,18 @@ class AspirationController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(Aspiration $aspiration)
+  public function show(int $id)
   {
-    //
+    $aspiration = Aspiration::with(['category', 'user'])->find($id);
+
+    if ($aspiration === null) {
+      throw new AspirationException("Aspiration not found.", 404);
+    }
+
+    return response()->json([
+      'message' => 'Successfully retrieved Aspiration data.',
+      'aspiration' => $aspiration->load(['category', 'user']),
+    ]);
   }
 
   /**
