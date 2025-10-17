@@ -95,8 +95,18 @@ class AspirationController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Aspiration $aspiration)
+  public function destroy(int $id)
   {
-    //
+    $aspiration = Aspiration::find($id);
+
+    if ($aspiration === null) {
+      throw new AspirationException("Aspiration not found.", 404);
+    }
+
+    $aspiration->delete();
+
+    return response()->json([
+      'message' => 'Aspiration deleted successfully',
+    ]);
   }
 }
