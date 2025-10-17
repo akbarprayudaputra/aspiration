@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AspirationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,3 +12,4 @@ Route::post("/logout", [AuthController::class, "logout"])->middleware('auth:sanc
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('aspirations', AspirationController::class);
+Route::apiResource('categories', CategoryController::class);
